@@ -10,7 +10,7 @@ func TestLetStatements(t *testing.T) {
 	input := `
 		let x = 5;
 		let y = 10;
-		let foobar = 838383
+		let foobar = 838383;
 	`
 
 	lexer := lexer.NewLexer(input)
@@ -25,12 +25,14 @@ func TestLetStatements(t *testing.T) {
 		t.Fatalf("program.Statements does not contain 3 statements. got=%d", len(program.Statements))
 	}
 
-	expectedIdentifiers := []string{
-		"x", "y", "foobar",
+	tests := []struct {
+		expectedIdentifier string
+	}{
+		{"x"}, {"y"}, {"foobar"},
 	}
-	for index, expectedIdentifier := range expectedIdentifiers {
+	for index, tt := range tests {
 		statement := program.Statements[index]
-		if !testLetStatement(t, statement, expectedIdentifier) {
+		if !testLetStatement(t, statement, tt.expectedIdentifier) {
 			return
 		}
 	}
