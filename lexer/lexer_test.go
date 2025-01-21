@@ -23,6 +23,17 @@ func TestOperatorAndSeparatorLexing(t *testing.T) {
 	ValidateLexerTokens(lexer, expectedTokens, t)
 }
 
+func TestNumberParsing(t *testing.T) {
+	input := `!15`
+	expectedTokens := []token.Token{
+		{Type: token.BANG, Literal: "!"},
+		{Type: token.INT, Literal: "15"},
+	}
+
+	lexer := NewLexer(input)
+	ValidateLexerTokens(lexer, expectedTokens, t)
+}
+
 func TestNextTokenOnRealisticCode(t *testing.T) {
 	input := `let five = 5;
 let ten = 10;
